@@ -89,6 +89,12 @@ ifndef ABC_USE_NO_READLINE
   $(info $(MSG_PREFIX)Using libreadline)
 endif
 
+ifdef ABC_USE_CUDA
+	LIBS += -lcudart
+	CFLAGS += -DABC_USE_CUDA
+  $(info $(MSG_PREFIX) Using cuda)
+endif
+
 # whether to compile with thread support
 ifndef ABC_USE_NO_PTHREADS
   CFLAGS += -DABC_USE_PTHREADS
