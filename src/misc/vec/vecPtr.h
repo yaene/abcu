@@ -316,10 +316,7 @@ static inline void ** Vec_PtrArray( Vec_Ptr_t * p )
   SeeAlso     []
 
 ***********************************************************************/
-static inline int Vec_PtrSize( Vec_Ptr_t * p )
-{
-    return p->nSize;
-}
+ABC_DEVICE static inline int Vec_PtrSize(Vec_Ptr_t *p) { return p->nSize; }
 
 /**Function*************************************************************
 
@@ -383,10 +380,9 @@ static inline int Vec_PtrCountZero( Vec_Ptr_t * p )
   SeeAlso     []
 
 ***********************************************************************/
-static inline void * Vec_PtrEntry( Vec_Ptr_t * p, int i )
-{
-    assert( i >= 0 && i < p->nSize );
-    return p->pArray[i];
+ABC_DEVICE static inline void *Vec_PtrEntry(Vec_Ptr_t *p, int i) {
+  assert(i >= 0 && i < p->nSize);
+  return p->pArray[i];
 }
 
 /**Function*************************************************************

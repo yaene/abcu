@@ -371,7 +371,9 @@ static inline int         Abc_ObjFaninId1( Abc_Obj_t * pObj )        { return pO
 static inline int         Abc_ObjFanoutEdgeNum( Abc_Obj_t * pObj, Abc_Obj_t * pFanout )  { assert( Abc_NtkHasAig(pObj->pNtk) );  if ( Abc_ObjFaninId0(pFanout) == pObj->Id ) return 0; if ( Abc_ObjFaninId1(pFanout) == pObj->Id ) return 1; assert( 0 ); return -1;  }
 static inline Abc_Obj_t * Abc_ObjFanout( Abc_Obj_t * pObj, int i )   { return (Abc_Obj_t *)pObj->pNtk->vObjs->pArray[ pObj->vFanouts.pArray[i] ];  }
 static inline Abc_Obj_t * Abc_ObjFanout0( Abc_Obj_t * pObj )         { return (Abc_Obj_t *)pObj->pNtk->vObjs->pArray[ pObj->vFanouts.pArray[0] ];  }
-static inline Abc_Obj_t * Abc_ObjFanin( Abc_Obj_t * pObj, int i )    { return (Abc_Obj_t *)pObj->pNtk->vObjs->pArray[ pObj->vFanins.pArray[i] ];   }
+ABC_DEVICE static inline Abc_Obj_t *Abc_ObjFanin(Abc_Obj_t *pObj, int i) {
+  return (Abc_Obj_t *)pObj->pNtk->vObjs->pArray[pObj->vFanins.pArray[i]];
+}
 static inline Abc_Obj_t * Abc_ObjFanin0( Abc_Obj_t * pObj )          { return (Abc_Obj_t *)pObj->pNtk->vObjs->pArray[ pObj->vFanins.pArray[0] ];   }
 static inline Abc_Obj_t * Abc_ObjFanin1( Abc_Obj_t * pObj )          { return (Abc_Obj_t *)pObj->pNtk->vObjs->pArray[ pObj->vFanins.pArray[1] ];   }
 static inline Abc_Obj_t * Abc_ObjFanin0Ntk( Abc_Obj_t * pObj )       { return (Abc_NtkIsNetlist(pObj->pNtk)? Abc_ObjFanin0(pObj)  : pObj);  }
@@ -906,7 +908,7 @@ extern ABC_DLL char *             Abc_SopCreateFromIsop( Mem_Flex_t * pMan, int 
 extern ABC_DLL char *             Abc_SopCreateFromTruthIsop( Mem_Flex_t * pMan, int nVars, word * pTruth, Vec_Int_t * vCover );
 extern ABC_DLL int                Abc_SopGetCubeNum( char * pSop );
 extern ABC_DLL int                Abc_SopGetLitNum( char * pSop );
-extern ABC_DLL int                Abc_SopGetVarNum( char * pSop );
+extern ABC_DLL ABC_DEVICE int Abc_SopGetVarNum(char *pSop);
 extern ABC_DLL int                Abc_SopGetPhase( char * pSop );
 extern ABC_DLL int                Abc_SopGetIthCareLit( char * pSop, int i );
 extern ABC_DLL void               Abc_SopComplement( char * pSop );

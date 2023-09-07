@@ -303,7 +303,9 @@ typedef ABC_INT64_T iword;
     _p_;                                                           \
   })
 #define ABC_FREE(obj) ((obj) ? (cudaFree((char *)(obj)), (obj) = 0) : 0)
+#define ABC_DEVICE __host__ __device__
 #else
+#define ABC_DEVICE
 #define ABC_ALLOC(type, num) ((type *)malloc(sizeof(type) * (size_t)(num)))
 #define ABC_FREE(obj) ((obj) ? (free((char *)(obj)), (obj) = 0) : 0)
 #endif

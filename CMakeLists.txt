@@ -47,6 +47,10 @@ if(ABC_USE_NAMESPACE)
     set(ABC_USE_NAMESPACE_FLAGS "ABC_USE_NAMESPACE=${ABC_USE_NAMESPACE}")
 endif()
 
+if(ABC_USE_CUDA)
+    set(ABC_USE_CUDA_FLAGS "ABC_USE_CUDA=${ABC_USE_CUDA}")
+endif()
+
 if( APPLE )
     set(make_env ${CMAKE_COMMAND} -E env SDKROOT=${CMAKE_OSX_SYSROOT})
 endif()
@@ -58,6 +62,7 @@ execute_process(
     make
         ${ABC_READLINE_FLAGS}
         ${ABC_USE_NAMESPACE_FLAGS}
+        ${ABC_USE_CUDA_FLAGS}
         ARCHFLAGS_EXE=${CMAKE_CURRENT_BINARY_DIR}/abc_arch_flags_program.exe
         ABC_MAKE_NO_DEPS=1
         CC=${CMAKE_C_COMPILER}
@@ -87,6 +92,10 @@ if(ABC_USE_NAMESPACE)
     set_source_files_properties(${ABC_SRC} PROPERTIES LANGUAGE CXX)
 endif()
 
+if(ABC_USE_CUDA)
+    set_source_files_properties(${ABC_SRC} PROPERTIES LANGUAGE CUDA)
+endif()
+
 function(abc_properties target visibility)
     target_include_directories(${target} ${visibility} ${CMAKE_CURRENT_SOURCE_DIR}/src )
     target_compile_options_filtered(${target} ${visibility} ${ABC_CFLAGS} ${ABC_CXXFLAGS} -Wno-unused-but-set-variable )
@@ -99,6 +108,9 @@ list(REMOVE_ITEM ABC_SRC ${ABC_MAIN_SRC})
 add_library(libabc EXCLUDE_FROM_ALL ${ABC_SRC})
 abc_properties(libabc PUBLIC)
 set_property(TARGET libabc PROPERTY OUTPUT_NAME abc)
+if(ABC_USE_CUDA)
+   set_property(TARGET libabc PROPERTY CUDA_SEPARABLE_COMPILATION ON)
+endif()
 
 add_executable(abc ${ABC_MAIN_SRC})
 target_link_libraries(abc PRIVATE libabc)

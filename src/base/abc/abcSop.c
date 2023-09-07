@@ -576,13 +576,11 @@ int Abc_SopGetLitNum( char * pSop )
   SeeAlso     []
 
 ***********************************************************************/
-int Abc_SopGetVarNum( char * pSop )
-{
-    char * pCur;
-    for ( pCur = pSop; *pCur != '\n'; pCur++ )
-        if ( *pCur == 0 )
-            return -1;
-    return pCur - pSop - 2;
+ABC_DEVICE int Abc_SopGetVarNum(char *pSop) {
+  char *pCur;
+  for (pCur = pSop; *pCur != '\n'; pCur++)
+    if (*pCur == 0) return -1;
+  return pCur - pSop - 2;
 }
 
 /**Function*************************************************************
