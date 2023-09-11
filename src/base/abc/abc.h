@@ -364,12 +364,16 @@ static inline void        Abc_ObjBlackboxToWhitebox( Abc_Obj_t * pObj ) { assert
 
 // working with fanin/fanout edges
 static inline int         Abc_ObjFaninNum( Abc_Obj_t * pObj )        { return pObj->vFanins.nSize;     }
-static inline int         Abc_ObjFanoutNum( Abc_Obj_t * pObj )       { return pObj->vFanouts.nSize;    }
+ABC_DEVICE static inline int Abc_ObjFanoutNum(Abc_Obj_t *pObj) {
+  return pObj->vFanouts.nSize;
+}
 static inline int         Abc_ObjFaninId( Abc_Obj_t * pObj, int i)   { return pObj->vFanins.pArray[i]; }
 static inline int         Abc_ObjFaninId0( Abc_Obj_t * pObj )        { return pObj->vFanins.pArray[0]; }
 static inline int         Abc_ObjFaninId1( Abc_Obj_t * pObj )        { return pObj->vFanins.pArray[1]; }
 static inline int         Abc_ObjFanoutEdgeNum( Abc_Obj_t * pObj, Abc_Obj_t * pFanout )  { assert( Abc_NtkHasAig(pObj->pNtk) );  if ( Abc_ObjFaninId0(pFanout) == pObj->Id ) return 0; if ( Abc_ObjFaninId1(pFanout) == pObj->Id ) return 1; assert( 0 ); return -1;  }
-static inline Abc_Obj_t * Abc_ObjFanout( Abc_Obj_t * pObj, int i )   { return (Abc_Obj_t *)pObj->pNtk->vObjs->pArray[ pObj->vFanouts.pArray[i] ];  }
+ABC_DEVICE static inline Abc_Obj_t *Abc_ObjFanout(Abc_Obj_t *pObj, int i) {
+  return (Abc_Obj_t *)pObj->pNtk->vObjs->pArray[pObj->vFanouts.pArray[i]];
+}
 static inline Abc_Obj_t * Abc_ObjFanout0( Abc_Obj_t * pObj )         { return (Abc_Obj_t *)pObj->pNtk->vObjs->pArray[ pObj->vFanouts.pArray[0] ];  }
 ABC_DEVICE static inline Abc_Obj_t *Abc_ObjFanin(Abc_Obj_t *pObj, int i) {
   return (Abc_Obj_t *)pObj->pNtk->vObjs->pArray[pObj->vFanins.pArray[i]];
