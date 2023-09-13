@@ -714,9 +714,8 @@ int Abc_SopIsComplement( char * pSop )
   SeeAlso     []
 
 ***********************************************************************/
-int Abc_SopIsConst0( char * pSop )
-{
-    return pSop[0] == ' ' && pSop[1] == '0';
+ABC_DEVICE int Abc_SopIsConst0(char *pSop) {
+  return pSop[0] == ' ' && pSop[1] == '0';
 }
 
 /**Function*************************************************************
@@ -730,9 +729,8 @@ int Abc_SopIsConst0( char * pSop )
   SeeAlso     []
 
 ***********************************************************************/
-int Abc_SopIsConst1( char * pSop )
-{
-    return pSop[0] == ' ' && pSop[1] == '1';
+ABC_DEVICE int Abc_SopIsConst1(char *pSop) {
+  return pSop[0] == ' ' && pSop[1] == '1';
 }
 
 /**Function*************************************************************
