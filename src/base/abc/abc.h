@@ -322,7 +322,9 @@ static inline Abc_Obj_t * Abc_NtkBox( Abc_Ntk_t * pNtk, int i )      { return (A
 
 // working with complemented attributes of objects
 static inline int         Abc_ObjIsComplement( Abc_Obj_t * p )       { return (int )((ABC_PTRUINT_T)p & (ABC_PTRUINT_T)01);             }
-static inline Abc_Obj_t * Abc_ObjRegular( Abc_Obj_t * p )            { return (Abc_Obj_t *)((ABC_PTRUINT_T)p & ~(ABC_PTRUINT_T)01);     }
+ABC_DEVICE static inline Abc_Obj_t *Abc_ObjRegular(Abc_Obj_t *p) {
+  return (Abc_Obj_t *)((ABC_PTRUINT_T)p & ~(ABC_PTRUINT_T)01);
+}
 static inline Abc_Obj_t * Abc_ObjNot( Abc_Obj_t * p )                { return (Abc_Obj_t *)((ABC_PTRUINT_T)p ^  (ABC_PTRUINT_T)01);     }
 static inline Abc_Obj_t * Abc_ObjNotCond( Abc_Obj_t * p, int c )     { return (Abc_Obj_t *)((ABC_PTRUINT_T)p ^  (ABC_PTRUINT_T)(c!=0)); }
 
@@ -378,12 +380,20 @@ static inline Abc_Obj_t * Abc_ObjFanout0( Abc_Obj_t * pObj )         { return (A
 ABC_DEVICE static inline Abc_Obj_t *Abc_ObjFanin(Abc_Obj_t *pObj, int i) {
   return (Abc_Obj_t *)pObj->pNtk->vObjs->pArray[pObj->vFanins.pArray[i]];
 }
-static inline Abc_Obj_t * Abc_ObjFanin0( Abc_Obj_t * pObj )          { return (Abc_Obj_t *)pObj->pNtk->vObjs->pArray[ pObj->vFanins.pArray[0] ];   }
-static inline Abc_Obj_t * Abc_ObjFanin1( Abc_Obj_t * pObj )          { return (Abc_Obj_t *)pObj->pNtk->vObjs->pArray[ pObj->vFanins.pArray[1] ];   }
+ABC_DEVICE static inline Abc_Obj_t *Abc_ObjFanin0(Abc_Obj_t *pObj) {
+  return (Abc_Obj_t *)pObj->pNtk->vObjs->pArray[pObj->vFanins.pArray[0]];
+}
+ABC_DEVICE static inline Abc_Obj_t *Abc_ObjFanin1(Abc_Obj_t *pObj) {
+  return (Abc_Obj_t *)pObj->pNtk->vObjs->pArray[pObj->vFanins.pArray[1]];
+}
 static inline Abc_Obj_t * Abc_ObjFanin0Ntk( Abc_Obj_t * pObj )       { return (Abc_NtkIsNetlist(pObj->pNtk)? Abc_ObjFanin0(pObj)  : pObj);  }
 static inline Abc_Obj_t * Abc_ObjFanout0Ntk( Abc_Obj_t * pObj )      { return (Abc_NtkIsNetlist(pObj->pNtk)? Abc_ObjFanout0(pObj) : pObj);  }
-static inline int         Abc_ObjFaninC0( Abc_Obj_t * pObj )         { return pObj->fCompl0;                                                }
-static inline int         Abc_ObjFaninC1( Abc_Obj_t * pObj )         { return pObj->fCompl1;                                                }
+ABC_DEVICE static inline int Abc_ObjFaninC0(Abc_Obj_t *pObj) {
+  return pObj->fCompl0;
+}
+ABC_DEVICE static inline int Abc_ObjFaninC1(Abc_Obj_t *pObj) {
+  return pObj->fCompl1;
+}
 static inline int         Abc_ObjFaninC( Abc_Obj_t * pObj, int i )   { assert( i >=0 && i < 2 ); return i? pObj->fCompl1 : pObj->fCompl0;   }
 static inline void        Abc_ObjSetFaninC( Abc_Obj_t * pObj, int i ){ assert( i >=0 && i < 2 ); if ( i ) pObj->fCompl1 = 1; else pObj->fCompl0 = 1; }
 static inline void        Abc_ObjXorFaninC( Abc_Obj_t * pObj, int i ){ assert( i >=0 && i < 2 ); if ( i ) pObj->fCompl1^= 1; else pObj->fCompl0^= 1; }
